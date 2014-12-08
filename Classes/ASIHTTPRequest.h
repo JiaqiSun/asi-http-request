@@ -540,12 +540,15 @@ typedef void (^ASIDataBlock)(NSData *data);
 	#endif
 }
 
-#pragma mark init / dealloc
+#pragma mark init / dealloc － 初始化/释放
 
 // Should be an HTTP or HTTPS url, may include username and password if appropriate
+// 应该是一个 HTTP 或 HTTPS 的 URL，如果需要可以包含用户名和口令
+// 例如 http://admin:123456@localhost/uploads
 - (id)initWithURL:(NSURL *)newURL;
 
 // Convenience constructor
+// 快捷构造方法
 + (id)requestWithURL:(NSURL *)newURL;
 
 + (id)requestWithURL:(NSURL *)newURL usingCache:(id <ASICacheDelegate>)cache;
@@ -566,7 +569,7 @@ typedef void (^ASIDataBlock)(NSData *data);
 - (void)setRequestRedirectedBlock:(ASIBasicBlock)aRedirectBlock;
 #endif
 
-#pragma mark setup request
+#pragma mark setup request － 设置请求
 
 // Add a custom header to the request
 - (void)addRequestHeader:(NSString *)header value:(NSString *)value;
@@ -890,12 +893,25 @@ typedef void (^ASIDataBlock)(NSData *data);
 #pragma mark threading behaviour
 
 // In the default implementation, all requests run in a single background thread
+// 在默认的实现中，所有的请求都运行在一个独立的后台线程中
+//
 // Advanced users only: Override this method in a subclass for a different threading behaviour
+// 对于高级用户：如果需要获得不同的线程行为，可以在子类中重写此方法
+//
 // Eg: return [NSThread mainThread] to run all requests in the main thread
+// 例如：返回 [NSThread mainThread] 可以在主线程上运行所有的请求
+//
 // Alternatively, you can create a thread on demand, or manage a pool of threads
+// 另外，也可以创建一个守护线程，或者管理一个线程池
+//
 // Threads returned by this method will need to run the runloop in default mode (eg CFRunLoopRun())
+// 此方法返回的线程需要运行在默认模式的运行循环下
+//
 // Requests will stop the runloop when they complete
+// 请求完成后会停止运行循环
+//
 // If you have multiple requests sharing the thread you'll need to restart the runloop when this happens
+// 如果有多个请求共享该线程，当运行循环被停止后，需要重新启动运行循环
 + (NSThread *)threadForRequest:(ASIHTTPRequest *)request;
 
 

@@ -17,19 +17,24 @@
 // Runs a request synchronously
 - (IBAction)simpleURLFetch:(id)sender
 {
+    // 使用文本框中的文字建立 URL
 	NSURL *url = [NSURL URLWithString:[urlField text]];
 
 	// Create a request
 	// You don't normally need to retain a synchronous request, but we need to in this case because we'll need it later if we reload the table data
+    // 通常不需要持有一个同步请求的引用，但是在此示例中需要，因为在后续需要用它刷新表格数据
 	[self setRequest:[ASIHTTPRequest requestWithURL:url]];
 	
 	//Customise our user agent, for no real reason
+    // 自定义用户代理(指定浏览器类型)，没有什么原因
 	[request addRequestHeader:@"User-Agent" value:@"ASIHTTPRequest"];
 
 	// Start the request
+    // 启动一个同步请求
 	[request startSynchronous];
 	
 	// Request has now finished
+    // 执行到这一步请求已经完成
 	[[self tableView] reloadData];
 
 }

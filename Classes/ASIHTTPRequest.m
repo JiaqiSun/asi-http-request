@@ -701,6 +701,7 @@ static NSOperationQueue *sharedQueue = nil;
 #pragma mark get information about this request
 
 // cancel the request - this must be run on the same thread as the request is running on
+// 取消请求 － 此方法必须与请求运行在同一个线程
 - (void)cancelOnRequestThread
 {
 	#if DEBUG_REQUEST_STATUS
